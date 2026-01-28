@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.+', changing: true
         classpath 'gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
@@ -26,7 +26,7 @@ configurations {
 
 minecraft {
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: "${minecraft_version}"
     runs {
         client {
             workingDirectory project.file('run')
@@ -81,7 +81,7 @@ processResources {
 tasks.processResources.dependsOn(rootProject.tasks.processResources)
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.0.15'
+    minecraft "net.minecraftforge:forge:${forge_version}"
     shadow(rootProject)
     shade(rootProject)
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -126,7 +126,7 @@ reobf {
 jar.finalizedBy('reobfJar')
 
 task sourceJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 
